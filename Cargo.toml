@@ -2,6 +2,11 @@
 name = "eshu"
 version = "0.1.0"
 edition = "2018"
+authors = ["Yujeonja <hardboiled65@gmail.com>"]
+description = "A CLDR Library."
+license = "MIT"
+readme = "README.md"
+keywords = ["unicode", "cldr", "locale"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
