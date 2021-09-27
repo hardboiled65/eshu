@@ -15,4 +15,4 @@ Eshu(Èṣù) is the god from the religion of the Yoruba people who can speak al
 License
 -------
 
-Eshu is developed unter MIT License. For the detail, see the LICENSE file.
+Eshu is developed under MIT License. For the detail, see the LICENSE file.
