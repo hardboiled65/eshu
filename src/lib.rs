@@ -13,7 +13,7 @@ mod tests {
     #[test]
     fn locale_new() {
         // let locale1 = Locale::new("en_US");
-        let locale2 = Locale::new("no_NO");
+        let locale2 = Locale::new("en-US");
         match locale2 {
             Ok(locale) => { println!("{:?}", locale); },
             Err(err) => {

@@ -29,7 +29,8 @@ impl fmt::Display for NoLocaleError {
 
 impl Locale {
     pub fn new(string: &str) -> Result<Locale, NoLocaleError> {
-        match string {
+        let string = string.replace("-", "_");
+        match string.as_str() {
             "en_US" => Ok(Locale::EnUs),
             "en_UK" => Ok(Locale::EnUk),
             "ja_JP" => Ok(Locale::JaJp),
