@@ -30,18 +30,10 @@ impl fmt::Display for NoLocaleError {
 impl Locale {
     pub fn new(string: &str) -> Result<Locale, NoLocaleError> {
         match string {
-            "en_US" => {
-                Ok(Locale::EnUs)
-            },
-            "en_UK" => {
-                Ok(Locale::EnUk)
-            },
-            "ja_JP" => {
-                Ok(Locale::JaJp)
-            },
-            "ko_KR" => {
-                Ok(Locale::KoKr)
-            },
+            "en_US" => Ok(Locale::EnUs),
+            "en_UK" => Ok(Locale::EnUk),
+            "ja_JP" => Ok(Locale::JaJp),
+            "ko_KR" => Ok(Locale::KoKr),
             _ => {
                 Err(NoLocaleError {
                     locale: string.to_string(),
