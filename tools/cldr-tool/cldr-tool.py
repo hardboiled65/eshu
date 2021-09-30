@@ -3,6 +3,7 @@ import os
 from argparse import ArgumentParser
 
 import data_utils
+import locale_utils
 
 TEMPLATES_DIR = os.path.realpath(os.path.join(
     data_utils.BASEDIR, '../../templates'))
@@ -14,11 +15,27 @@ templates = [
     },
 ]
 
+def gen_locale_enum(template_file):
+    template_path = os.path.join(TEMPLATES_DIR, template_file)
+    f = open(template_path, 'r')
+    template = f.read()
+    f.close()
+
+    locales = ''
+    for locale in locale_utils.locales:
+        locales += '    ' + locale.title().replace('_', '') + ',\n'
+    locales = locales.rstrip()
+
+    ret = template.format(locales)
+
+    return ret
+
 def gen(template):
     found = next((t for t in templates if t['name'] == template), None)
     if found is None:
         raise ValueError(template + ': No such template.')
-    print(found)
+    if found['name'] == 'locale-enum':
+        print(gen_locale_enum(found['file']))
 
 def ls():
     print(''' - available templates
