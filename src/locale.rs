@@ -42,4 +42,13 @@ impl Locale {
             }
         }
     }
+
+    pub fn language(&self) -> &str {
+        match self {
+            Locale::EnUs => "en",
+            Locale::EnUk => "en",
+            Locale::JaJp => "ja",
+            Locale::KoKr => "ko",
+        }
+    }
 }

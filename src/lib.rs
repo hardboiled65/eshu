@@ -21,4 +21,10 @@ mod tests {
             },
         }
     }
+
+    #[test]
+    fn locale_language() {
+        let locale = Locale::EnUk;
+        assert_eq!(locale.language(), "en");
+    }
 }
