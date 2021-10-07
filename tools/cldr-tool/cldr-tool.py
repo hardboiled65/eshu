@@ -43,10 +43,7 @@ def get_template(template_file):
 #========================
 
 def gen_locale_enum(template_file):
-    template_path = os.path.join(TEMPLATES_DIR, template_file)
-    f = open(template_path, 'r')
-    template = f.read()
-    f.close()
+    template = get_template(template_file)
 
     locales = ''
     for locale in locale_utils.locales:
@@ -58,10 +55,7 @@ def gen_locale_enum(template_file):
     return ret
 
 def gen_locale_new(template_file):
-    template_path = os.path.join(TEMPLATES_DIR, template_file)
-    f = open(template_path, 'r')
-    template = f.read()
-    f.close()
+    template = get_template(template_file)
 
     matches = ''
     for locale in locale_utils.locales:
