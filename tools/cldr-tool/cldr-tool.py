@@ -21,6 +21,10 @@ templates = [
         'name': 'locale-language',
         'file': 'locale_language.rs',
     },
+    {
+        'name': 'locale-territory',
+        'file': 'locale_territory.rs',
+    },
 ]
 
 #========================
@@ -85,6 +89,22 @@ def gen_locale_language(template_file):
 
     return ret
 
+def gen_locale_territory(template_file):
+    template = get_template(template_file)
+
+    matches = ''
+    for locale in locale_utils.locales:
+        territory = locale_utils.locale_get_territory(locale)
+        matches += '            '
+        matches += f'Locale::{locale_to_rust_enum(locale)}'
+        matches += f' => "{territory}"'
+        matches += ',\n'
+    matches = matches.rstrip()
+
+    ret = template.format(matches)
+
+    return ret
+
 #=================
 # Sub-commands
 #=================
@@ -99,12 +119,15 @@ def gen(template):
         print(gen_locale_new(found['file']))
     elif found['name'] == 'locale-language':
         print(gen_locale_language(found['file']))
+    elif found['name'] == 'locale-territory':
+        print(gen_locale_territory(found['file']))
 
 def ls():
     print(''' - available templates
 locale-enum
 locale-new
 locale-language
+locale-territory
     ''')
 
 if __name__ == '__main__':

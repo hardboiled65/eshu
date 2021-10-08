@@ -60,4 +60,16 @@ impl Locale {
             //----END LOCALE LANGUAGE----
         }
     }
+
+    pub fn territory(&self) -> &str {
+        match self {
+            //----BEGIN LOCALE TERRITORY----
+            Locale::EnUs => "US",
+            Locale::EnUk => "UK",
+            Locale::JaJp => "JP",
+            Locale::KoKp => "KP",
+            Locale::KoKr => "KR",
+            //----END LOCALE TERRITORY----
+        }
+    }
 }

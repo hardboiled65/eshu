@@ -30,6 +30,11 @@ def locale_get_language(locale):
 
     return language
 
+def locale_get_territory(locale):
+    territory = locale.split('_')[1]
+
+    return territory
+
 
 class LdmlAttribute:
     def __init__(self, key, value):
