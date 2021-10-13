@@ -2,17 +2,17 @@ pub mod locale;
 
 #[cfg(test)]
 mod tests {
-    use super::locale::{LanguageCode, TerritoryCode, Locale};
+    use super::locale::{Language, Territory, Locale};
 
     #[test]
-    fn language_code_to_string() {
-        let lang = LanguageCode::Ko;
+    fn language_to_string() {
+        let lang = Language::Ko;
         assert_eq!(lang.to_string(), String::from("Ko"));
     }
 
     #[test]
-    fn territory_code_to_string() {
-        let terr = TerritoryCode::Uk;
+    fn territory_to_string() {
+        let terr = Territory::Uk;
         assert_eq!(terr.to_string(), String::from("Uk"));
     }
 

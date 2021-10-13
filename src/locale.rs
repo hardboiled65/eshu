@@ -3,13 +3,13 @@ use std::fmt;
 
 #[derive(Debug, PartialEq, Eq)]
 #[repr(u16)]
-pub enum LanguageCode {
+pub enum Language {
     En,
     Ja,
     Ko,
 }
 
-impl fmt::Display for LanguageCode {
+impl fmt::Display for Language {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{:?}", self)
     }
@@ -17,7 +17,7 @@ impl fmt::Display for LanguageCode {
 
 #[derive(Debug, PartialEq, Eq)]
 #[repr(u16)]
-pub enum TerritoryCode {
+pub enum Territory {
     Us,
     Uk,
     Jp,
@@ -25,7 +25,7 @@ pub enum TerritoryCode {
     Kr,
 }
 
-impl fmt::Display for TerritoryCode {
+impl fmt::Display for Territory {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{:?}", self)
     }
