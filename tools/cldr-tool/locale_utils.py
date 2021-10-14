@@ -54,6 +54,12 @@ class LdmlNode:
         self.attributes = []
 
     def __str__(self):
+        if len(self.attributes) > 0 and self.text is not None:
+            attribs = []
+            for attr in self.attributes:
+                attribs.append(str(attr))
+            attrib_text = ' '.join(attribs)
+            return f'<path="{self.path}" {attrib_text} text="{self.text}">'
         if self.text is not None:
             return f'<path="{self.path}" text="{self.text}">'
         return f'<path="{self.path}">'
