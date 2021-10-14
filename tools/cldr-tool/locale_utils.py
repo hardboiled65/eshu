@@ -95,5 +95,24 @@ class LdmlNode:
                                     attr = LdmlAttribute(k, v)
                                     language.attributes.append(attr)
                                 languages.children.append(language)
+                    # scripts Node.
+                    if ldp_child.tag == 'scripts':
+                        scripts = LdmlNode(
+                            path='/ldml/localeDisplayNames/scripts'
+                        )
+                        scripts.parent = locale_display_names
+                        locale_display_names.children.append(scripts)
+                        for scripts_child in ldp_child:
+                            # script Nodes.
+                            if scripts_child.tag == 'script':
+                                script = LdmlNode(
+                                    path='/ldml/localeDisplayNames/scripts/script'
+                                )
+                                script.parent = scripts
+                                script.text = scripts_child.text
+                                for k, v in scripts_child.attrib.items():
+                                    attr = LdmlAttribute(k, v)
+                                    script.attributes.append(attr)
+                                scripts.children.append(script)
 
         return ldml_node

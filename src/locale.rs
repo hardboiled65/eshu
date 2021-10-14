@@ -18,6 +18,7 @@ impl fmt::Display for Language {
 #[derive(Debug, PartialEq, Eq)]
 #[repr(u16)]
 pub enum Territory {
+    Code001,
     Us,
     Uk,
     Jp,
