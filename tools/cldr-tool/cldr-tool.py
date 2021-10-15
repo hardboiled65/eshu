@@ -4,11 +4,16 @@ from argparse import ArgumentParser
 
 import data_utils
 import locale_utils
+from locale_utils import LdmlNode
 
 TEMPLATES_DIR = os.path.realpath(os.path.join(
     data_utils.BASEDIR, '../../templates'))
 
 templates = [
+    {
+        'name': 'language-enum',
+        'file': 'language_enum.rs',
+    },
     {
         'name': 'locale-enum',
         'file': 'locale_enum.rs',
@@ -34,6 +39,14 @@ templates = [
 def locale_to_rust_enum(locale):
     return locale.title().replace('_', '')
 
+def language_to_rust_enum(language):
+    return language.title()
+
+def territory_to_rust_enum(territory):
+    if territory[0].isnumeric():
+        return f'Code{territory}'
+    return territory.title()
+
 def get_template(template_file):
     template_path = os.path.join(TEMPLATES_DIR, template_file)
     f = open(template_path, 'r')
@@ -45,6 +58,39 @@ def get_template(template_file):
 #========================
 # Generate functions
 #========================
+
+def gen_language_enum(template_file):
+    template = get_template(template_file)
+
+    ldml = LdmlNode.parse('en')
+    languages = ldml.find_by_path('/ldml/localeDisplayNames/languages')
+
+    lang_list = []
+    for language in languages.children:
+        lang_type = None
+        # Find 'type' in <language> tag.
+        for attr in language.attributes:
+            if attr.key == 'type':
+                lang_type = attr.value
+                break
+        if lang_type is None:
+            continue
+        # Strip if 'type' consists with script or territory.
+        if lang_type.count('_') > 0:
+            lang_type = lang_type.split('_')[0]
+        # Duplicate check.
+        if lang_list.count(language_to_rust_enum(lang_type)) == 0:
+            lang_list.append(language_to_rust_enum(lang_type))
+
+    # Indent enum values.
+    for idx, lang in enumerate(lang_list):
+        lang_list[idx] = '    ' + lang
+    arg = ',\n'.join(lang_list)
+    arg += ','
+
+    ret = template.format(arg)
+
+    return ret
 
 def gen_locale_enum(template_file):
     template = get_template(template_file)
@@ -121,9 +167,12 @@ def gen(template):
         print(gen_locale_language(found['file']))
     elif found['name'] == 'locale-territory':
         print(gen_locale_territory(found['file']))
+    elif found['name'] == 'language-enum':
+        print(gen_language_enum(found['file']))
 
 def ls():
     print(''' - available templates
+language-enum
 locale-enum
 locale-new
 locale-language
