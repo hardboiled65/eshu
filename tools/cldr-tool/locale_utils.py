@@ -67,6 +67,33 @@ class LdmlNode:
     def __repr__(self):
         return self.__str__()
 
+    def find_by_path(self, path):
+        # For root path(/ldml).
+        if path == self.path:
+            return self
+
+        if not path.startswith(self.path):
+            return None
+
+        found = None
+        loop = True
+        children = self.children
+        while loop:
+            if len(children) == 0:
+                break
+            for child in children:
+                if path.startswith(child.path):
+                    found = child
+                    if found.path == path:
+                        loop = False
+                        break
+                    children = child.children
+                else:
+                    loop = False
+                    break
+
+        return found
+
     @staticmethod
     def parse(language):
         tree = ET.parse(os.path.join(MAIN_DIR, f'{language}.xml'))
