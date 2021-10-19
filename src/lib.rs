@@ -7,7 +7,7 @@ mod tests {
     #[test]
     fn language_to_string() {
         let lang = Language::Ko;
-        assert_eq!(lang.to_string(), String::from("Ko"));
+        assert_eq!(lang.to_string(), String::from("ko"));
     }
 
     #[test]

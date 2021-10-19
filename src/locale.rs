@@ -607,7 +607,8 @@ pub enum Language {
 
 impl fmt::Display for Language {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{:?}", self)
+        let src = format!("{:?}", self);
+        write!(f, "{}", src.to_lowercase())
     }
 }
 
