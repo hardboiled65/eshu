@@ -625,7 +625,8 @@ pub enum Territory {
 
 impl fmt::Display for Territory {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{:?}", self)
+        let src = format!("{:?}", self);
+        write!(f, "{}", src.to_uppercase())
     }
 }
 

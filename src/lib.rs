@@ -13,7 +13,7 @@ mod tests {
     #[test]
     fn territory_to_string() {
         let terr = Territory::Uk;
-        assert_eq!(terr.to_string(), String::from("Uk"));
+        assert_eq!(terr.to_string(), String::from("UK"));
     }
 
     #[test]
