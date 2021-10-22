@@ -14,6 +14,9 @@ mod tests {
     fn territory_to_string() {
         let terr = Territory::Uk;
         assert_eq!(terr.to_string(), String::from("UK"));
+
+        let terr_001 = Territory::Code001;
+        assert_eq!(terr_001.to_string(), String::from("001"));
     }
 
     #[test]
