@@ -94,6 +94,19 @@ class LdmlNode:
 
         return found
 
+    def attribute_value(self, key):
+        attrs = self.attributes
+        if len(attrs) == 0:
+            return None
+
+        found = None
+        for attr in attrs:
+            if attr.key == key:
+                found = attr.value
+                break
+
+        return found
+
     @staticmethod
     def parse(language):
         tree = ET.parse(os.path.join(MAIN_DIR, f'{language}.xml'))

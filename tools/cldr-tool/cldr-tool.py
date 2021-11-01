@@ -66,29 +66,28 @@ def gen_language_enum(template_file):
     languages = ldml.find_by_path('/ldml/localeDisplayNames/languages')
 
     lang_list = []
-    for language in languages.children:
-        lang_type = None
-        # Find 'type' in <language> tag.
-        for attr in language.attributes:
-            if attr.key == 'type':
-                lang_type = attr.value
-                break
-        if lang_type is None:
-            continue
-        # Strip if 'type' consists with script or territory.
+    def get_lang(lang_type):
         if lang_type.count('_') > 0:
-            lang_type = lang_type.split('_')[0]
-        # Duplicate check.
-        if lang_list.count(language_to_rust_enum(lang_type)) == 0:
-            lang_list.append(language_to_rust_enum(lang_type))
+            return lang_type.split('_')[0]
+        return lang_type
+    for language in languages.children:
+        lang = get_lang(language.attribute_value('type'))
+        filtered = filter(
+            lambda x: get_lang(x.attribute_value('type')) == lang, lang_list
+        )
+        if len(list(filtered)) > 0:
+            continue
+        lang_list.append(language)
 
     # Indent enum values.
-    for idx, lang in enumerate(lang_list):
-        lang_list[idx] = '    ' + lang
-    arg = ',\n'.join(lang_list)
-    arg += ','
+    txt = ''
+    for language in lang_list:
+        txt += '    /// ' + language.text + '\n'
+        txt += f'    {language_to_rust_enum(language.attribute_value("type"))},\n'
+    # Remove trailing newline.
+    txt = txt.rstrip()
 
-    ret = template.format(arg)
+    ret = template.format(txt)
 
     return ret
 
