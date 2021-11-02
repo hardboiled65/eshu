@@ -15,6 +15,10 @@ templates = [
         'file': 'language_enum.rs',
     },
     {
+        'name': 'script-enum',
+        'file': 'script_enum.rs',
+    },
+    {
         'name': 'locale-enum',
         'file': 'locale_enum.rs',
     },
@@ -84,6 +88,28 @@ def gen_language_enum(template_file):
     for language in lang_list:
         txt += '    /// ' + language.text + '\n'
         txt += f'    {language_to_rust_enum(language.attribute_value("type"))},\n'
+    # Remove trailing newline.
+    txt = txt.rstrip()
+
+    ret = template.format(txt)
+
+    return ret
+
+def gen_script_enum(template_file):
+    template = get_template(template_file)
+
+    ldml = LdmlNode.parse('en')
+    scripts = ldml.find_by_path('/ldml/localeDisplayNames/scripts')
+    print(scripts) # DEBUG!
+
+    sc_list = []
+    def get_sc(sc_type):
+        return
+
+    # Indent enum values.
+    txt = ''
+    for sciprt in sc_list:
+        txt += ''
     # Remove trailing newline.
     txt = txt.rstrip()
 
@@ -168,10 +194,13 @@ def gen(template):
         print(gen_locale_territory(found['file']))
     elif found['name'] == 'language-enum':
         print(gen_language_enum(found['file']))
+    elif found['name'] == 'script-enum':
+        print(gen_script_enum(found['file']))
 
 def ls():
     print(''' - available templates
 language-enum
+script-enum
 locale-enum
 locale-new
 locale-language
