@@ -100,16 +100,24 @@ def gen_script_enum(template_file):
 
     ldml = LdmlNode.parse('en')
     scripts = ldml.find_by_path('/ldml/localeDisplayNames/scripts')
-    print(scripts) # DEBUG!
 
     sc_list = []
     def get_sc(sc_type):
-        return
+        return sc_type
+    for script in scripts.children:
+        sc = get_sc(script.attribute_value('type'))
+        filtered = filter(
+            lambda x: get_sc(x.attribute_value('type')) == sc, sc_list
+        )
+        if len(list(filtered)) > 0:
+            continue
+        sc_list.append(script)
 
     # Indent enum values.
     txt = ''
-    for sciprt in sc_list:
-        txt += ''
+    for script in sc_list:
+        txt += '    /// ' + script.text + '\n'
+        txt += f'    {script.attribute_value("type")},\n'
     # Remove trailing newline.
     txt = txt.rstrip()
 

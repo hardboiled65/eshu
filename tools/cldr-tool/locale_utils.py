@@ -88,6 +88,8 @@ class LdmlNode:
                         loop = False
                         break
                     children = child.children
+                elif path.startswith(os.path.realpath(os.path.join(child.path, '..'))):
+                    pass
                 else:
                     loop = False
                     break
